@@ -17,7 +17,7 @@ export function sessionCookieOptions(d: boolean) {
 		path: '/',
 		httpOnly: true as const,
 		secure: !d,
-		sameSite: 'strict' as const,
+		sameSite: 'lax' as const,
 		maxAge: COOKIE_MAX_AGE
 	};
 }
