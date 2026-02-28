@@ -4,6 +4,10 @@ interface ScriptResponse {
 	categories?: Category[];
 	success?: boolean;
 	error?: string;
+	monthlyMax?: number;
+	monthlySpent?: number;
+	foodMax?: number;
+	foodSpent?: number;
 }
 
 export interface Category {
@@ -41,4 +45,31 @@ export async function getCategories(): Promise<Category[]> {
 
 export async function addAmountToCategory(categoryName: string, amount: number): Promise<void> {
 	await callScript('addAmount', { categoryName, amount });
+}
+
+export interface BudgetStatus {
+	monthlyMax: number;
+	monthlySpent: number;
+	foodMax: number;
+	foodSpent: number;
+}
+
+export async function getBudgetStatus(): Promise<BudgetStatus | null> {
+	try {
+		const data = await callScript('getBudgetStatus');
+		if (
+			data.monthlyMax === undefined ||
+			data.monthlySpent === undefined ||
+			data.foodMax === undefined ||
+			data.foodSpent === undefined
+		) return null;
+		return {
+			monthlyMax: data.monthlyMax,
+			monthlySpent: data.monthlySpent,
+			foodMax: data.foodMax,
+			foodSpent: data.foodSpent
+		};
+	} catch {
+		return null;
+	}
 }

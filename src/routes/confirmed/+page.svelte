@@ -1,3 +1,7 @@
+<script lang="ts">
+	let loading = $state(false);
+</script>
+
 <svelte:head>
 	<title>Done!</title>
 </svelte:head>
@@ -19,9 +23,18 @@
 			</a>
 			<a
 				href="/"
-				class="block w-full rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors"
+				onclick={() => (loading = true)}
+				class="flex items-center justify-center gap-2 w-full rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors cursor-pointer"
 			>
-				Add Another
+				{#if loading}
+					<svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+						<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+						<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+					</svg>
+					Loading…
+				{:else}
+					Add Another
+				{/if}
 			</a>
 		</div>
 	</div>
